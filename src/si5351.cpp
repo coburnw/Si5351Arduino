@@ -26,16 +26,13 @@
 
 // Remove this to turn off the Arduino hardware environment.  Arduino
 // is the default.
-#define SI5351_ARDUINO
+//#define SI5351_ARDUINO
 
 #if defined(SI5351_ARDUINO)
-	#include "Arduino.h"
-	#include "Wire.h"
-	#include "ArduinoInterface.h"
-	static ArduinoInterface I2C_Interface_Instance;
-#else
-	#include "TestInterface.h"
-	static TestInterface I2C_Interface_Instance;
+#include "Arduino.h"
+#include "Wire.h"
+#include "ArduinoInterface.h"
+static ArduinoInterface I2C_Interface_Instance;
 #endif
 
 #include "si5351.h"
@@ -44,6 +41,7 @@
 /* Public functions */
 /********************/
 
+#if defined(SI5351_ARDUINO)
 Si5351::Si5351(uint8_t i2c_addr):
 	i2c_bus_addr(i2c_addr)
 {
@@ -52,6 +50,7 @@ Si5351::Si5351(uint8_t i2c_addr):
 
 	setup();
 }
+#endif
 
 Si5351::Si5351(uint8_t i2c_addr, I2CInterface* i2c):
 	i2c_bus_addr(i2c_addr),
