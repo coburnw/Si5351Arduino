@@ -33,19 +33,14 @@
 
 #include "si5351_base.h"
 
-/* Define definitions */
+/* Arduino Wire-based I2C access to the Si5351 core library */
 
-class Si5351
-{
+class Si5351: public Si5351_Base {
 public:
 
-  /**
-   * Use this constructor when using the (default) Arduino
-   * I2C interface.
-   */
   Si5351(uint8_t i2c_addr = SI5351_BUS_BASE_ADDR);
 
-  uint8_t check_address(uint8_t);
+  uint8_t check_address();
   uint8_t si5351_write_bulk(uint8_t, uint8_t, uint8_t *);
   uint8_t si5351_write(uint8_t, uint8_t);
   uint8_t si5351_read(uint8_t);

@@ -24,23 +24,22 @@
 
 #include "Arduino.h"
 #include "Wire.h"
-//#include "I2CInterface.h"
+#include "si5351.h"
 
 /**
  * The standard Ardiuno way of talking to I2C
  * via the Wire.h library.
  */
 
-class si5351: public Si5351_base {
   Si5351::Si5351(uint8_t chip_addr)
   {
     i2c_bus_addr = chip_addr;
-    this->setup()
   }
   
-  uint8_t Si5351::check_address(uint8_t i2c_bus_addr)
+  uint8_t Si5351::check_address()
   {
     Wire.beginTransmission(i2c_bus_addr);
+    
     return Wire.endTransmission();
   }
 
@@ -50,10 +49,10 @@ class si5351: public Si5351_base {
     Wire.write(addr);
     for(int i = 0; i < bytes; i++)
       {
-	Wire.write(data[i]);
+	      Wire.write(data[i]);
       }
+      
     return Wire.endTransmission();
-    //return i2c_interface->write_bulk(i2c_bus_addr, addr, bytes, data);
   }
 
   uint8_t Si5351::si5351_write(uint8_t addr, uint8_t data)
@@ -61,8 +60,8 @@ class si5351: public Si5351_base {
     Wire.beginTransmission(i2c_bus_addr);
     Wire.write(addr);
     Wire.write(data);
+
     return Wire.endTransmission();
-    //return i2c_interface->write(i2c_bus_addr, addr, data);
   }
 
   uint8_t Si5351::si5351_read(uint8_t addr)
@@ -77,11 +76,8 @@ class si5351: public Si5351_base {
 
     while(Wire.available())
       {
-	reg_val = Wire.read();
+	      reg_val = Wire.read();
       }
 
     return reg_val;
-    //return i2c_interface->read(i2c_bus_addr, addr);
   }
-};
-

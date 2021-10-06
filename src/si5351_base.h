@@ -26,8 +26,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SI5351_H_
-#define SI5351_H_
+#ifndef SI5351_BASE_H_
+#define SI5351_BASE_H_
 
 #include <stdint.h>
 
@@ -274,13 +274,14 @@ struct Si5351IntStatus
 	uint8_t LOS_STKY;
 };
 
-class Si5351
+class Si5351_Base
 {
 public:
-  virtual uint8_t check_address(uint8_t) =0;
-  virtual uint8_t si5351_write_bulk(uint8_t, uint8_t, uint8_t *) =0;
-  virtual uint8_t si5351_write(uint8_t, uint8_t) =0;
-  virtual uint8_t si5351_read(uint8_t) =0;
+  Si5351_Base();
+  virtual uint8_t check_address() = 0;
+  virtual uint8_t si5351_write_bulk(uint8_t, uint8_t, uint8_t *) = 0;
+  virtual uint8_t si5351_write(uint8_t, uint8_t) = 0;
+  virtual uint8_t si5351_read(uint8_t) = 0;
 
   bool init(uint8_t, uint32_t, int32_t);
   void reset(void);
@@ -305,6 +306,7 @@ public:
   void set_pll_input(enum si5351_pll, enum si5351_pll_input);
   void set_vcxo(uint64_t, uint8_t);
   void set_ref_freq(uint32_t, enum si5351_pll_input);
+  
   struct Si5351Status dev_status = {.SYS_INIT = 0, .LOL_B = 0, .LOL_A = 0,
 				    .LOS = 0, .REVID = 0};
   struct Si5351IntStatus dev_int_status = {.SYS_INIT_STKY = 0, .LOL_B_STKY = 0,
@@ -330,7 +332,6 @@ private:
   int32_t ref_correction[2];
   uint8_t clkin_div;
   bool clk_first_set[8];
-	// This is a connection to the I2C bus
 };
 
-#endif /* SI5351_H_ */
+#endif /* SI5351_BASE_H_ */
