@@ -1,5 +1,5 @@
 /*
- * si5351.h - Si5351 library for Arduino
+ * si5351_base.h - Base Si5351 library
  *
  * Copyright (C) 2015 - 2019 Jason Milldrum <milldrum@gmail.com>
  *                           Dana H. Myers <k6jq@comcast.net>
@@ -278,6 +278,8 @@ class Si5351_Base
 {
 public:
   Si5351_Base();
+
+  // should these be protected?
   virtual uint8_t check_address() = 0;
   virtual uint8_t si5351_write_bulk(uint8_t, uint8_t, uint8_t *) = 0;
   virtual uint8_t si5351_write(uint8_t, uint8_t) = 0;

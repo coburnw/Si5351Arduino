@@ -1,5 +1,5 @@
 /*
- * si5351.cpp - Si5351 library for Arduino
+ * si5351.cpp - Base Si5351 library
  *
  * Copyright (C) 2015 - 2019 Jason Milldrum <milldrum@gmail.com>
  *                           Dana H. Myers <k6jq@comcast.net>

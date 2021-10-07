@@ -31,53 +31,53 @@
  * via the Wire.h library.
  */
 
-  Si5351::Si5351(uint8_t chip_addr)
-  {
-    i2c_bus_addr = chip_addr;
-  }
+Si5351::Si5351(uint8_t chip_addr)
+{
+  i2c_bus_addr = chip_addr;
+}
+
+uint8_t Si5351::check_address()
+{
+  Wire.beginTransmission(i2c_bus_addr);
   
-  uint8_t Si5351::check_address()
-  {
-    Wire.beginTransmission(i2c_bus_addr);
-    
-    return Wire.endTransmission();
-  }
+  return Wire.endTransmission();
+}
 
-  uint8_t Si5351::si5351_write_bulk(uint8_t addr, uint8_t bytes, uint8_t *data)
-  {
-    Wire.beginTransmission(i2c_bus_addr);
-    Wire.write(addr);
-    for(int i = 0; i < bytes; i++)
-      {
-	      Wire.write(data[i]);
-      }
-      
-    return Wire.endTransmission();
-  }
+uint8_t Si5351::si5351_write_bulk(uint8_t addr, uint8_t bytes, uint8_t *data)
+{
+  Wire.beginTransmission(i2c_bus_addr);
+  Wire.write(addr);
+  for(int i = 0; i < bytes; i++)
+    {
+      Wire.write(data[i]);
+    }
+  
+  return Wire.endTransmission();
+}
 
-  uint8_t Si5351::si5351_write(uint8_t addr, uint8_t data)
-  {
-    Wire.beginTransmission(i2c_bus_addr);
-    Wire.write(addr);
-    Wire.write(data);
+uint8_t Si5351::si5351_write(uint8_t addr, uint8_t data)
+{
+  Wire.beginTransmission(i2c_bus_addr);
+  Wire.write(addr);
+  Wire.write(data);
+  
+  return Wire.endTransmission();
+}
 
-    return Wire.endTransmission();
-  }
-
-  uint8_t Si5351::si5351_read(uint8_t addr)
-  {
-    uint8_t reg_val = 0;
-
-    Wire.beginTransmission(i2c_bus_addr);
-    Wire.write(addr);
-    Wire.endTransmission();
-
-    Wire.requestFrom(i2c_bus_addr, (uint8_t)1, (uint8_t)false);
-
-    while(Wire.available())
-      {
-	      reg_val = Wire.read();
-      }
-
-    return reg_val;
-  }
+uint8_t Si5351::si5351_read(uint8_t addr)
+{
+  uint8_t reg_val = 0;
+  
+  Wire.beginTransmission(i2c_bus_addr);
+  Wire.write(addr);
+  Wire.endTransmission();
+  
+  Wire.requestFrom(i2c_bus_addr, (uint8_t)1, (uint8_t)false);
+  
+  while(Wire.available())
+    {
+      reg_val = Wire.read();
+    }
+  
+  return reg_val;
+}
